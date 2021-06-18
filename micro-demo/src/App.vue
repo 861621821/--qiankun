@@ -1,9 +1,3 @@
-<!--
- * @title: page title
- * @author: liuwei
- * @LastEditTime: 2021-01-21 15:29:57
- * @desc: Description
--->
 <template>
   <div id="app">
     <div id="nav">

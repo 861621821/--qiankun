@@ -2,9 +2,9 @@ import store from './store'
 
 const microApps = [
   {
-    name: 'micro-test',
-    entry: process.env.VUE_APP_SUB_TEST,
-    activeRule: '/micro-test'
+    name: 'micro-auth',
+    entry: process.env.VUE_APP_SUB_AUTH,
+    activeRule: '/micro-auth'
   },
   {
     name: 'micro-demo',

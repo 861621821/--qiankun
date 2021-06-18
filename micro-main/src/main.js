@@ -1,12 +1,35 @@
 import Vue from 'vue'
 import App from './App.vue'
 import { registerMicroApps, start, setDefaultMountApp } from 'qiankun'
+import router from './router'
 import microApps from './micro-app'
+import actions from './store'
 import 'nprogress/nprogress.css'
+// import { store as commonStore } from 'common'
+import {
+  Menu,
+  Submenu,
+  MenuItem,
+  MenuItemGroup,
+  Scrollbar,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem
+} from 'element-ui'
+
+Vue.use(Menu)
+Vue.use(Submenu)
+Vue.use(MenuItem)
+Vue.use(MenuItemGroup)
+Vue.use(Scrollbar)
+Vue.use(Dropdown)
+Vue.use(DropdownMenu)
+Vue.use(DropdownItem)
 
 Vue.config.productionTip = false
 
 const instance = new Vue({
+  router,
   render: h => h(App)
 }).$mount('#app')
 
@@ -26,25 +49,38 @@ const apps = microApps.map(item => {
   }
 })
 
+// 监听全局状态获取所有子应用
+let asyncApp = []
+actions.onGlobalStateChange(({ asyncApps }) => {
+  asyncApp = asyncApps
+})
+
 registerMicroApps(apps, {
   beforeLoad: app => {
-    console.log('before load app.name====>>>>>', app.name)
+    // console.log('before load app.name====>>>>>', app.name)
   },
   beforeMount: [
     app => {
-      console.log('[LifeCycle] before mount %c%s', 'color: green;', app.name)
+      // console.log('[LifeCycle] before mount %c%s', 'color: green;', app.name)
     }
   ],
   afterMount: [
     app => {
-      console.log('[LifeCycle] after mount %c%s', 'color: green;', app.name)
+      // console.log('%c [主应用after mount]', 'color: green;')
+      asyncApp.map(e => {
+        if (e.path === app.props.routerBase) {
+          actions.setGlobalState({
+            asyncSubAppRoutes: e.menu
+          })
+        }
+      })
     }
   ],
   afterUnmount: [
     app => {
-      console.log('[LifeCycle] after unmount %c%s', 'color: green;', app.name)
+      // console.log('[LifeCycle] after unmount %c%s', 'color: green;', app.name)
     }
   ]
 })
-setDefaultMountApp('/micro-test')
+setDefaultMountApp('/micro-auth')
 start()

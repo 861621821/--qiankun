@@ -2,13 +2,16 @@ import './public-path'
 import Vue from 'vue'
 import App from './App.vue'
 import routes from './router'
-import { store as commonStore } from 'common'
+import { commonStore } from './common/src/index.js'
 import store from './store'
 import VueRouter from 'vue-router'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 let instance = null
-
 function render (props = {}) {
   const { container, routerBase } = props
   const router = new VueRouter({
@@ -30,20 +33,23 @@ if (!window.__POWERED_BY_QIANKUN__) {
   // 独立运行时，也注册一个名为global的store module
   commonStore.globalRegister(store)
   // 模拟登录后，存储用户信息到global module
-  const userInfo = { name: '我是独立运行时名字叫张三' } // 假设登录后取到的用户信息
-  store.commit('global/setGlobalState', { user: userInfo })
+  // const userInfo = { name: '我是独立运行时名字叫张三' } // 假设登录后取到的用户信息
+  // store.commit('global/setGlobalState', { user: userInfo })
 
   render()
 }
 
 export async function bootstrap () {
-  console.log('[vue] vue app bootstraped')
+  // console.log('%c [auth] app bootstraped', 'color: green;', 123)
 }
 
 export async function mount (props) {
-  console.log('[vue] props from main framework', props)
+  // 从主应用获取子应用路由
+  props.onGlobalStateChange(({ asyncSubAppRoutes }) => {
+    store.dispatch('setSubAppRoutes', asyncSubAppRoutes)
+  })
 
-  commonStore.globalRegister(store, props)
+  // common.store.globalRegister(store, props)
 
   render(props)
 }

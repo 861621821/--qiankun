@@ -9,10 +9,14 @@
     "start": "npm run serve"
   },
   "dependencies": {
+    "axios": "^0.21.1",
+    "common": "file:../common",
     "core-js": "^3.6.5",
+    "element-ui": "^2.15.1",
     "nprogress": "^0.2.0",
     "qiankun": "^2.0.22",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-router": "^3.5.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -20,6 +24,7 @@
     "@vue/cli-service": "~4.5.0",
     "@vue/eslint-config-standard": "^5.1.2",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-component": "^1.1.1",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",

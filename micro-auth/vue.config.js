@@ -1,7 +1,7 @@
 const { name } = require('../package.json')
 
 module.exports = {
-  publicPath: '/subapp/test',
+  publicPath: '/subapp/auth',
   transpileDependencies: ['common'],
   chainWebpack: config => config.resolve.symlinks(false),
   configureWebpack: {
@@ -16,6 +16,17 @@ module.exports = {
     port: process.env.VUE_APP_PORT,
     headers: {
       'Access-Control-Allow-Origin': '*'
+    },
+    overlay: {
+      warnings: false,
+      errors: false
+    }
+  },
+  css: {
+    loaderOptions: {
+      scss: {
+        additionalData: '@import \'@/style/index.scss\';'
+      }
     }
   }
 }

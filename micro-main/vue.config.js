@@ -1,4 +1,12 @@
 module.exports = {
+  lintOnSave: 'warning',
+  devServer: {
+    port: 80,
+    overlay: {
+      warnings: false,
+      errors: false
+    }
+  },
   transpileDependencies: ['common'],
   chainWebpack: config => {
     config.plugin('html')
@@ -6,8 +14,6 @@ module.exports = {
         args[0].title = 'qiankun-example'
         return args
       })
-  },
-  devServer: {
-     port: 80
+    config.resolve.symlinks(false)
   }
 }
