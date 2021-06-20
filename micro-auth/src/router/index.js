@@ -1,8 +1,3 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-
-Vue.use(VueRouter)
-
 const routes = [
   {
     path: '/',
@@ -10,20 +5,14 @@ const routes = [
   },
   {
     path: '/app-setting',
-    name: '应用配置',
-    component: () => import(/* webpackChunkName: "page" */ '../views/AppSetting.vue'),
-    meta: {
-      isMenu: true
-    }
+    name: 'app-setting',
+    component: () => import('../views/AppSetting.vue')
   },
   {
     path: '/role',
-    name: '角色管理',
-    component: () => import(/* webpackChunkName: "role" */ '../views/Role.vue'),
-    meta: {
-      isMenu: true
-    }
+    name: 'role',
+    component: () => import('../views/Role.vue')
   }
-]
+];
 
 export default routes

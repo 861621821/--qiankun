@@ -33,7 +33,7 @@ export default {
 <style lang="scss" scoped>
 .subapp-menu-wrapper{
   width: 226px;
-  box-shadow: 2px 0px 6px 0px rgb(51 51 51 / 15%);
+  box-shadow: 2px 0px 6px 0px rgba(51,51,51,0.15);
   .el-menu{
     border-right: unset;
   }

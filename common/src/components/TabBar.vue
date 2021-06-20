@@ -21,7 +21,7 @@ export default {
 <style lang="scss" scoped>
 ::v-deep{
   .el-tabs__nav{
-    padding: 0 10px;
+    padding: 0 15px;
   }
   .el-tabs__nav-wrap::after{
     height: 1px;

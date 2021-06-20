@@ -1,63 +1,48 @@
 <template>
-  <div id="app">
+  <div class="auth-app">
     <side-bar/>
-    <div class="app-wrapper">
-      <tab-bar/>
-      <div class="app-main-wrapper">
-        <router-view/>
-      </div>
+    <div class="sub-app-wrapper">
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
-import { commonComponents } from './common/src/index'
+import { onMounted } from 'vue';
+// import { useRouter } from 'vue-router';
+import SideBar from './components/SideBar.vue'
 export default {
-  components: {
-    SideBar: commonComponents.SideBar,
-    TabBar: commonComponents.TabBar
+  'name': 'App',
+  'components': {
+    SideBar
   },
-  computed: {
-    // subAppRoutes () {
-    //   return this.$store.state.global.asyncSubAppRoutes
-    // }
-  },
-  mounted () {
-    // console.log(this.subAppRoutes)
-  },
-  methods: {
-
+  setup () {
+    // const router = useRouter();
+    onMounted(() => {
+      // console.log(router)
+    })
   }
 }
 </script>
 
-<style lang="scss" scoped>
-#app {
+<style lang="scss">
+html, body{
   height: 100%;
-  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+#app {
+  color: #2c3e50;
+  height: 100%;
+}
+.auth-app{
   display: flex;
-  .app-wrapper{
+  .el-menu{
+    width: 226px;
+  }
+  .sub-app-wrapper{
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    .app-main-wrapper{
-      flex: 1;
-      padding: 0 20px;
-    }
+    padding: 15px;
   }
 }
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-
 </style>
