@@ -19,7 +19,7 @@ function render({ routerBase, container } = {}) {
   instance = createApp(App)
     .use(router)
     .use(store)
-    .use(ElementPlus)
+    .use(ElementPlus, { size: 'small' })
     .mount(container ? container.querySelector('#app') : '#app');
 }
 
