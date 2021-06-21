@@ -110,7 +110,6 @@ html, body{
     flex: 1;
     height: 100%;
     margin: 15px;
-    background: #fff;
     overflow: hidden;
     border-radius: 5px;
     .el-scrollbar__wrap{

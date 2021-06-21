@@ -33,6 +33,8 @@ export async function bootstrap() {
 }
 
 export async function mount(props) {
+  // 获取子应用name
+  store.dispatch('setSubAppName', props.name);
   // 从主应用获取子应用路由
   props.onGlobalStateChange(({ asyncSubAppRoutes }) => {
     store.dispatch('setSubAppRoutes', asyncSubAppRoutes);

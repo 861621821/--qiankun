@@ -1,93 +1,98 @@
 <template>
   <div class="app-setting">
-    <div class="apps">
-      <div class="title">应用</div>
-      <div class="lists">
-        <div class="item" @click="handleClickItem(0, item.id)" :class="{active: current[0] === item.id}" v-for="item in apps" :key="item.id">{{item.name}}</div>
-        <el-button size="small" plain class="add" icon="el-icon-edit">增加应用</el-button>
-      </div>
-    </div>
-    <div class="level1">
-      <div class="title">一级菜单</div>
-      <div class="lists">
-        <div class="item" @click="handleClickItem(1, item.id)" :class="{active: current[1] === item.id}" v-for="item in menu1List" :key="item.id">{{item.name}}</div>
-        <el-button size="small" plain class="add" icon="el-icon-edit">增加一级菜单</el-button>
-      </div>
-    </div>
-    <div class="level2">
-      <div class="title">二级菜单</div>
-      <div class="lists">
-        <div class="item" @click="handleClickItem(2, item.id)" :class="{active: current[2] === item.id}" v-for="item in menu2List" :key="item.id">{{item.name}}</div>
-        <el-button size="small" plain class="add" icon="el-icon-edit">增加二级菜单</el-button>
-      </div>
-    </div>
-    <!-- <div class="btn">
-      <div class="title">按钮</div>
-      <div class="lists">
-        <div class="item">菜单1</div>
-        <div class="item">菜单1</div>
-        <div class="item">菜单1</div>
-        <div class="item">菜单1</div>
-        <div class="item">菜单1</div>
-        <el-button size="small" plain class="add" icon="el-icon-edit">增加应用</el-button>
-      </div>
-    </div> -->
+    <el-tree
+      :data="appData"
+      :props="props"
+      accordion
+      draggable
+      @node-click="handleNodeClick">
+    </el-tree>
+    <el-form ref="form" :model="form" label-width="80px">
+      <el-form-item label="应用名">
+        <el-input v-model="form.name"></el-input>
+      </el-form-item>
+      <el-form-item label="活动区域">
+        <el-input v-model="form.path"></el-input>
+      </el-form-item>
+      <el-form-item label="图标">
+        <el-input v-model="form.icon"></el-input>
+      </el-form-item>
+      <el-form-item label="是否隐藏">
+        <el-switch v-model="form.hide" active-color="#13ce66" inactive-color="#ff4949">
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
 <script>
+import { reactive,toRefs } from 'vue'
 export default {
-  data () {
-    return {
-      current: [],
-      apps: [
+  setup() {
+    const state = reactive({
+      appData: [
         {
-          id: '001',
-          name: '权限应用'
+          name: '应用配置',
+          path: '/micro-auth',
+          icon: '',
+          children: [
+            {
+              name: '应用菜单管理',
+              path: '/app-setting',
+              icon: ''
+            },
+            {
+              name: '权限管理',
+              path: '/auth',
+              icon: ''
+            },
+            {
+              name: '员工管理',
+              path: '/staff',
+              icon: ''
+            }
+          ]
         },
         {
-          id: '002',
-          name: 'demo应用'
-        },
-        {
-          id: '003',
-          name: 'test应用'
+          name: '示例应用',
+          path: '/micro-demo',
+          icon: '',
+          children: [
+            {
+              name: '示例菜单',
+              path: '/app-setting',
+              icon: ''
+            },
+            {
+              name: '示例菜单',
+              path: '/auth',
+              icon: ''
+            },
+            {
+              name: '示例菜单',
+              path: '/staff',
+              icon: ''
+            }
+          ]
         }
       ],
-      menu1List: [
-        {
-          id: '001',
-          name: '菜单1'
-        },
-        {
-          id: '002',
-          name: '菜单1'
-        },
-        {
-          id: '003',
-          name: '菜单1'
-        }
-      ],
-      menu2List: [
-        {
-          id: '001',
-          name: '菜单1'
-        },
-        {
-          id: '002',
-          name: '菜单1'
-        },
-        {
-          id: '003',
-          name: '菜单1'
-        }
-      ]
+      props: {
+        children: 'children',
+        label: 'name'
+      },
+      form: {
+        name: '',
+        path: '',
+        icon: '',
+        hide: false
+      }
+    })
+
+    const handleNodeClick = (data) => {
+      console.log(data);
     }
-  },
-  methods: {
-    handleClickItem (i, id) {
-      this.$set(this.current, i, id)
-      console.log(this.current)
+    return {
+      ...toRefs(state),
+      handleNodeClick
     }
   }
 }
@@ -96,64 +101,13 @@ export default {
 <style lang="scss" scoped>
 .app-setting{
   display: flex;
-  .apps,.level1,.level2,.btn{
-    width: 200px;
-    margin: 0 20px;
-    padding: 10px;
-    background: #F2F3F5;
-    border-radius: 4px;
-    &:hover .add{
-      visibility: unset;
-    }
+  height: 100%;
+  .el-tree{
+    width: 300px;
+    border-right: 1px solid #efefef
   }
-  .title{
-    font-weight: bold;
-    font-size: 16px;
-    color: $main-color;
-    margin-bottom: 10px;
-    padding: 0 10px;
-  }
-  .lists{
-    text-align: center;
-  }
-  .item{
-    color: $main-color;
-    text-align: left;
-    height: 32px;
-    line-height: 32px;
-    border: 1px solid #EAEBEC;
-    border-radius: 4px;
-    margin: 5px 0;
-    padding: 0 10px;
-    font-size: 14px;
-    background: #fff;
-    cursor: pointer;
-    position: relative;
-    &.active{
-      background: #409eff38;
-      &::before{
-        display: inline-block;
-        content: '';
-        width: 4px;
-        height: 32px;
-        background: #18aaff;
-        border-radius: 4px 0 0 4px;
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-    }
-  }
-  .add{
-    visibility: hidden;
-    margin-top: 10px;
-  }
-  .el-button{
-    color: #909090;
-  }
-  .el-button.is-plain:focus, .el-button.is-plain:hover{
-    color: #818080;
-    border-color: #c8cbce;
+  .el-form{
+    flex: 1;
   }
 }
 </style>
