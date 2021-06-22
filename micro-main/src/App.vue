@@ -88,8 +88,7 @@ export default {
   padding: 0;
 }
 html, body{
-  margin: 0!important;
-  padding: 0;
+  font-size: 14px;
 }
 .layout-wrapper{
   overflow: hidden;

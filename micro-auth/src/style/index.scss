@@ -3,6 +3,12 @@ $sec-color: #909090;
 $border-color: #EAEBEC;
 $shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 
-.el-button{
-  border-radius: 4px;
+html{
+  .el-button{
+    border-radius: 4px;
+  }
+  
+  .el-dialog{
+    border-radius: 10px;
+  }
 }

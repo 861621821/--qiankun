@@ -8,12 +8,20 @@
         accordion
         draggable
         @node-click="handleNodeClick">
+        <template #default="{ node, data }">
+          <span class="custom-tree-node">
+            <span>{{ node.label }}</span>
+            <el-button type="text" @click.stop="handleNew(1,data)">{{data.type === 0 ? '添加菜单' : '添加子菜单'}}</el-button>
+            <el-button type="text" @click.stop="test(data)">{{data.type === 0 ? '删除应用' : '删除菜单'}}</el-button>
+          </span>
+        </template>
       </el-tree>
-      <el-button v-if="showReset">还原</el-button>
+      <el-button icon="el-icon-refresh">同步更新</el-button>
+      <el-button icon="el-icon-circle-plus" @click="handleNew(0)">添加新应用</el-button>
     </div>
 
     <div class="right">
-      <div class="module-title">编辑菜单</div>
+      <div class="module-title">修改菜单</div>
       <el-form ref="_form" :model="form" label-width="100px">
         <el-form-item label="应用名">
           <el-input v-model="form.name" placeholder="例如：应用配置"></el-input>
@@ -31,13 +39,40 @@
           <el-switch v-model="form.hide" active-color="#13ce66" inactive-color="#dcdfe6"/>
         </el-form-item>
         <el-form-item>
-          <el-button plain type="danger">删除</el-button>
-          <el-button plain>保存</el-button>
-          <el-button plain>{{ form.type === 1 ? '添加二级菜单': '添加菜单'}}</el-button>
+          <el-button plain icon="el-icon-edit" disabled>确定修改</el-button>
         </el-form-item>
       </el-form>
-
     </div>
+
+    <el-dialog
+      title="新增应用"
+      v-model="dialogVisible"
+      width="30%"
+      :before-close="handleClose">
+      <el-form ref="_form" :model="form" label-width="100px">
+        <el-form-item label="应用名">
+          <el-input v-model="form.name" placeholder="例如：应用配置"></el-input>
+        </el-form-item>
+        <el-form-item label="路径">
+          <el-input v-model="form.path" placeholder="例如：/test"></el-input>
+        </el-form-item>
+        <el-form-item label="图标">
+          <el-input v-model="form.icon" placeholder="例如：el-icon-s-goods"></el-input>
+        </el-form-item>
+        <el-form-item label="组件" v-if="newType !== 0">
+          <el-input v-model="form.component" placeholder="例如：Test.vue"></el-input>
+        </el-form-item>
+        <el-form-item label="是否隐藏" v-if="newType !== 0">
+          <el-switch v-model="form.hide" active-color="#13ce66" inactive-color="#dcdfe6"/>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="dialogVisible = false">保存</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -111,16 +146,28 @@ export default {
         component: '',
         hide: false
       },
-      showReset: false
+      newType: 1,
+      dialogVisible: false
     })
 
     const handleNodeClick = (data) => {
       console.log(data);
-      Object.assign(state.form, data)
+      state.form = data
+    }
+
+    const handleNew = (type,pDate) => {
+      state.dialogVisible = true
+      state.newType = type
+    }
+
+    const test = (node,data) => {
+      console.log(node)
     }
     return {
       ...toRefs(state),
-      handleNodeClick
+      handleNodeClick,
+      handleNew,
+      test
     }
   }
 }
@@ -159,8 +206,27 @@ export default {
   }
   .el-tree{
     padding: 20px 5px;
+    ::v-deep{
+      .el-tree-node__content{
+        display: flex;
+        &:hover{
+          .el-button{
+            display: inline-block;
+          }
+        }
+      }
+      .custom-tree-node{
+        flex: 1;
+        line-height: 32px;
+      }
+      .el-button{
+        float: right;
+        margin: 0 5px;
+        display: none;
+      }
+    }
   }
-  .el-form{
+  .right .el-form{
     flex: 1;
     padding: 20px 5px;
     .el-form-item{
