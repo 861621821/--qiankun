@@ -1,25 +1,25 @@
 import { initGlobalState } from 'qiankun'
-// import Vue from 'vue'
+import Vue from 'vue'
 
 // 父应用的初始state
 // Vue.observable是为了让initialState变成可响应：https://cn.vuejs.org/v2/api/#Vue-observable。
-const initialState = {
-  asyncApps: [],
-  asyncSubAppRoutes: []
-}
+const initialState = Vue.observable({
+  subAppLoading: false, // 子系统加载状态
+  currentAppProps: {}, // 当前子系统
+  asyncApps: [], // 通过接口请求回来的所有系统数据
+  asyncSubAppRoutes: [] // 当前子系统菜单
+})
 const actions = initGlobalState(initialState)
 
-// actions.onGlobalStateChange((newState, prev) => {
-//   // newState: 变更后的状态; prev 变更前的状态
-//   console.log('主应用状态改变：', newState, prev)
-//   for (const key in newState) {
-//     initialState[key] = newState[key]
-//   }
-// })
+actions.onGlobalStateChange((newState, prev) => {
+  // console.log('GlobalStateChange', newState, prev)
+  for (const key in newState) {
+    initialState[key] = newState[key]
+  }
+})
 
 // 定义一个获取state的方法下发到子应用
 actions.getGlobalState = (key) => {
-  // console.log('获取全局状态', initialState)
   return key ? initialState[key] : initialState
 }
 

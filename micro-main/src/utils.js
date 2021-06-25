@@ -10,60 +10,63 @@ export default {
         data: [
           {
             path: '/micro-auth',
-            name: '权限',
+            title: '应用',
             icon: 'el-icon-set-up',
             id: '001',
             menu: [
               {
                 path: '/app-setting',
-                name: '应用配置',
+                title: '应用配置',
+                icon: 'el-icon-s-grid',
                 id: '001001',
                 pid: '001',
-                component: 'Page',
+                component: 'AppSetting.vue',
                 isMenu: true,
                 sort: 1
               },
               {
                 path: '/role',
-                name: '角色管理',
+                title: '角色管理',
+                icon: 'el-icon-s-custom',
                 id: '001002',
                 pid: '001',
-                component: 'Role',
+                component: 'Role.vue',
                 isMenu: true,
                 sort: 2
               },
               {
                 path: '/staff',
-                name: '员工管理',
+                title: '员工管理',
+                icon: 'el-icon-user-solid',
                 id: '001003',
                 pid: '001',
-                component: 'Role',
+                component: 'Role.vue',
                 isMenu: true,
-                sort: 2
+                sort: 3
               }
             ]
           },
           {
             path: '/micro-demo',
-            name: '客户',
+            title: '客户',
             appId: '002',
             icon: 'el-icon-user-solid',
             menu: [
               {
                 path: '/customer',
-                name: '客户管理',
+                title: '客户管理',
                 id: '002001',
                 pid: '002',
-                component: 'Customer',
+                component: 'Customer.vue',
                 isMenu: true,
                 sort: 1
               },
               {
                 path: '/role',
-                name: '任务宝',
+                title: '任务宝',
                 id: '002002',
                 pid: '002',
-                component: 'Role',
+                component: 'Role.vue',
                 isMenu: true,
                 sort: 2
               }

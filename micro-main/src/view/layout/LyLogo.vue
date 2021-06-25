@@ -5,7 +5,7 @@
 export default {
   data () {
     return {
-      url: require('@/assets/logo.png')
+      url: require('@/assets/images/logo.png')
     }
   }
 }

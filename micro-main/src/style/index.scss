@@ -1,0 +1,50 @@
+#nprogress .spinner{
+  display: none;
+}
+
+.flex{
+  display: flex;
+}
+.flex-center{
+  align-items: center;
+}
+
+/* loading效果 */
+.lyloading {
+  display: block;
+  width: 0;
+  height: 0;
+  margin: 0 auto 25px auto;
+  perspective: 200px;
+}
+
+.lyloading::before,
+.lyloading::after {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  content: "";
+  background: rgba(0, 0, 0, 0);
+  animation: lyloading 0.5s infinite alternate;
+  box-shadow: 0 34px 42px #afceff
+}
+.lyloading::before{
+  left: 0;
+}
+.lyloading::after {
+  right: 0;
+  animation-delay: 0.15s;
+}
+
+@keyframes lyloading {
+  0% {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    transform: scale(1) translateY(0) rotateX(0deg);
+  }
+
+  100% {
+    background: #409EFF;
+    box-shadow: 0 25px 40px rgba(#409EFF, 0.5);
+    transform: scale(1.2) translateY(-25px) rotateX(45deg);
+  }
+}

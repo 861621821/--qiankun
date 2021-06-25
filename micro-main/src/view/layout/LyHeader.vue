@@ -1,13 +1,13 @@
 <template>
   <div class="header-wrapper">
     <div class="company-name">
-      <el-dropdown>
+      <el-dropdown @command="handleCommandClick">
         <span class="el-dropdown-link">
           零一创造欢乐(深圳)科技有限公司<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>切换企业</el-dropdown-item>
-          <el-dropdown-item divided>退出登录</el-dropdown-item>
+          <el-dropdown-item command="switch">切换企业</el-dropdown-item>
+          <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -19,8 +19,16 @@ export default {
     return {}
   },
   methods: {
-    gotoApp (app) {
-      history.pushState(null, app.name, app.path)
+    handleCommandClick (command) {
+      switch (command) {
+        case 'switch':
+
+          break
+        case 'logout':
+          localStorage.clear()
+          this.$router.push('/login')
+          break
+      }
     }
   }
 }

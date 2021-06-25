@@ -3,19 +3,36 @@ import './public-path.js'
 import { createRouter, createWebHistory } from 'vue-router'
 import store from './store/inedx'
 import routes from './router/index'
+import { commonStore } from 'common'
+import { initRouter } from './utils'
 import App from './App.vue'
 import ElementPlus from 'element-plus'
+import { ElLoading } from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
 
 const __qiankun__ = window.__POWERED_BY_QIANKUN__
 
-let instance = null
+let instance = null, router = null, subAppPageLoading = null
 
 function render({ routerBase, container } = {}) {
-  const router = createRouter({
+  router = createRouter({
     history: createWebHistory(__qiankun__ ? routerBase : '/'),
     routes
-  });
+  })
+
+  router.beforeEach((to, from, next) => {
+    store.dispatch('global/addRoutesTags', { path: to.path, title: to.meta.title })
+    // 添加页面loading
+    subAppPageLoading = ElLoading.service({
+      target: '.scroll-view'
+    })
+    next()
+  })
+
+  router.afterEach(() => {
+    subAppPageLoading.close()
+  })
+
   instance = createApp(App)
     .use(router)
     .use(store)
@@ -33,16 +50,12 @@ export async function bootstrap() {
 }
 
 export async function mount(props) {
-  // 获取子应用name
-  store.dispatch('setSubAppName', props.name);
-  // 从主应用获取子应用路由
-  props.onGlobalStateChange(({ asyncSubAppRoutes }) => {
-    store.dispatch('setSubAppRoutes', asyncSubAppRoutes);
-  });
-
-  // common.store.globalRegister(store, props)
+  // 注册公共Store 将父应用状态传给子应用
+  commonStore.globalRegister(store, props)
 
   render(props);
+  const { asyncSubAppRoutes } = props.getGlobalState()
+  initRouter(router, asyncSubAppRoutes)
 }
 
 export async function unmount() {

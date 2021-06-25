@@ -2,23 +2,29 @@
   <div class="tags-view">
     <transition-group name="tag">
       <span class="tag" v-for="(item, i) in tags" :key="item">
-        {{ item }}
-        <i class="el-icon-close" v-if="i !== '/'" @click="handleColseTag(i)"></i>
+        {{item.name}}
+        <i class="el-icon-close" v-if="item.path !== '/'" @click="handleColseTag(item, i)"></i>
       </span>
     </transition-group>
   </div>
 </template>
 
 <script>
-import { useStore } from 'vuex'
+import { reactive,toRefs } from 'vue'
 export default {
   setup() {
-    const { state, dispatch } = useStore()
-    const tags = state.global.routesTags
-    const handleColseTag = (i) => dispatch('global/removeRoutesTags', i)
-
+    const state = reactive({
+      tags: [
+        { path: '/', name: '首页' },
+        { path: '/index', name: '首1页' },
+        { path: '/aaa', name: '首页22222' }
+      ]
+    })
+    const handleColseTag = (item,i) => {
+      state.tags.splice(i, 1)
+    }
     return {
-      tags,
+      ...toRefs(state),
       handleColseTag
     }
   }
@@ -64,5 +70,6 @@ export default {
 .tag-enter-from,
 .tag-leave-to {
   opacity: 0;
+  transform: scale(10%)
 }
 </style>

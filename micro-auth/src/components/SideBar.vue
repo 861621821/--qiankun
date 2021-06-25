@@ -1,11 +1,11 @@
 <template>
   <div class="subapp-menu-wrapper">
     <div class="subapp-name">{{ subAppName }}</div>
-    <el-menu router default-active="2">
-      <el-menu-item :index="item.path" v-for="item in subAppRoutes" :key="item.id">
+    <el-menu router>
+      <el-menu-item :index="item.path" v-for="item in initMenu()" :key="item.id">
         <template #title>
-          <i class="el-icon-location"></i>
-          <span>{{ item.name }}</span>
+          <i :class="item.icon || 'el-icon-warning'"></i>
+          <span>{{ item.title }}</span>
         </template>
       </el-menu-item>
     </el-menu>
@@ -18,12 +18,17 @@ import { useStore } from 'vuex'
 export default {
   setup() {
     const store = useStore()
-    const subAppName = computed(() => store.state.subAppName)
-    const subAppRoutes = computed(() => store.state.subAppRoutes)
-    console.log(store.state);
+    const { value:currentAppProps } = computed(() => store.state.global.currentAppProps)
+    const subAppName = currentAppProps.name
+    const { asyncSubAppRoutes } = currentAppProps.getGlobalState()
+    const initMenu = () => {
+      const sortedRoutes = asyncSubAppRoutes.sort((a, b) => a.sort - b.sort)
+      return sortedRoutes.filter(e => e.isMenu)
+    }
+
     return {
       subAppName,
-      subAppRoutes
+      initMenu
     }
   }
 }
@@ -56,12 +61,12 @@ export default {
   .el-menu{
     border-right: unset;
     color: $main-color;
-    ::v-deep{
-      .el-menu-item.is-active{
+    :deep(.el-menu-item){
+      &.is-active{
+        color: $main-color;
         background: #f0f0f0;
-        color: $main-color
       }
-      .el-menu-item:focus, .el-menu-item:hover{
+      &:focus, &:hover{
         background: #f0f0f0;
       }
     }

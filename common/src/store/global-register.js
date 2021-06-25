@@ -3,7 +3,7 @@
  * @param {qiankun下发的props} props 
  */
 function registerGlobalModule (store, props = {}) {
-  // console.log('***************',store, props);
+  console.log(store,props);
   if (!store || !store.hasModule) {
     return;
   }
@@ -14,22 +14,39 @@ function registerGlobalModule (store, props = {}) {
   if (!store.hasModule('global')) {
     const globalModule = {
       namespaced: true,
-      state: initState,
+      state: {
+        ...initState,
+        routesTags: {}, // 存放打开过的页面
+      },
       mutations: {
-        setGlobalState (state, payload) {
+        SET_GLOBALSTATE (state, payload) {
           state = Object.assign(state, payload);
           // 通知父应用
           props.setGlobalState(state)
+        },
+        ADD_ROUTESTAGS(state, {path, title}){
+          state.routesTags[path] = title
+        },
+        REMOVE_ROUTESTAGS(state, path){
+          delete state.routesTags[path]
         }
       },
       actions: {
         // 子应用改变state并通知父应用
         setGlobalState ({ commit }, payload) {
-          commit('setGlobalState', payload);
+          commit('SET_GLOBALSTATE', payload);
         },
         // 初始化，只用于mount时同步父应用的数据
         initGlobalState ({ commit }, payload) {
-          commit('setGlobalState', payload);
+          commit('SET_GLOBALSTATE', payload);
+        },
+        // 记录每次访问的页面
+        addRoutesTags({ commit }, payload){
+          commit('ADD_ROUTESTAGS', payload)
+        },
+        // 删除页面记录
+        removeRoutesTags({ commit }, payload){
+          commit('REMOVE_ROUTESTAGS', payload)
         },
       }
     };

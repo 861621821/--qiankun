@@ -4,8 +4,9 @@ import { registerMicroApps, start, setDefaultMountApp } from 'qiankun'
 import router from './router'
 import microApps from './micro-app'
 import actions from './store'
+import http from './utils/http'
 import 'nprogress/nprogress.css'
-// import { store as commonStore } from 'common'
+import './style/index.scss'
 import {
   Menu,
   Submenu,
@@ -14,17 +15,22 @@ import {
   Scrollbar,
   Dropdown,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Loading,
+  Link
 } from 'element-ui'
 
 Vue.use(Menu)
-Vue.use(Submenu)
-Vue.use(MenuItem)
-Vue.use(MenuItemGroup)
-Vue.use(Scrollbar)
-Vue.use(Dropdown)
-Vue.use(DropdownMenu)
-Vue.use(DropdownItem)
+  .use(Submenu)
+  .use(MenuItem)
+  .use(MenuItemGroup)
+  .use(Scrollbar)
+  .use(Dropdown)
+  .use(DropdownMenu)
+  .use(DropdownItem)
+  .use(Loading)
+  .use(Link)
+  .use(http)
 
 Vue.config.productionTip = false
 
@@ -49,30 +55,24 @@ const apps = microApps.map(item => {
   }
 })
 
-// 监听全局状态获取所有子应用
-let asyncApp = []
-actions.onGlobalStateChange(({ asyncApps }) => {
-  asyncApp = asyncApps
-})
-
 registerMicroApps(apps, {
   beforeLoad: app => {
-    // console.log('before load app.name====>>>>>', app.name)
+
   },
   beforeMount: [
     app => {
-      // console.log('[LifeCycle] before mount %c%s', 'color: green;', app.name)
+      console.log(app.props)
+      actions.setGlobalState({
+        subAppLoading: true,
+        // 保存当前子系统
+        currentAppProps: app.props
+      })
     }
   ],
   afterMount: [
     app => {
-      // console.log('%c [主应用after mount]', 'color: green;')
-      asyncApp.map(e => {
-        if (e.path === app.props.routerBase) {
-          actions.setGlobalState({
-            asyncSubAppRoutes: e.menu
-          })
-        }
+      actions.setGlobalState({
+        subAppLoading: false
       })
     }
   ],

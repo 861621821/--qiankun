@@ -19,7 +19,6 @@
       <el-button icon="el-icon-refresh">同步更新</el-button>
       <el-button icon="el-icon-circle-plus" @click="handleNew(0)">添加新应用</el-button>
     </div>
-
     <div class="right">
       <div class="module-title">修改菜单</div>
       <el-form ref="_form" :model="form" label-width="100px">
@@ -45,7 +44,7 @@
     </div>
 
     <el-dialog
-      title="新增应用"
+      :title="newType === 0 ? '新增应用' : '新增菜单'"
       v-model="dialogVisible"
       width="30%"
       :before-close="handleClose">
@@ -155,12 +154,12 @@ export default {
       state.form = data
     }
 
-    const handleNew = (type,pDate) => {
+    const handleNew = (type, pDate) => {
       state.dialogVisible = true
       state.newType = type
     }
 
-    const test = (node,data) => {
+    const test = (node, data) => {
       console.log(node)
     }
     return {
@@ -204,26 +203,24 @@ export default {
       left: 0;
     }
   }
-  .el-tree{
+  :deep(.el-tree){
     padding: 20px 5px;
-    ::v-deep{
-      .el-tree-node__content{
-        display: flex;
-        &:hover{
-          .el-button{
-            display: inline-block;
-          }
+    .el-tree-node__content{
+      display: flex;
+      &:hover{
+        .el-button{
+          display: inline-block;
         }
       }
-      .custom-tree-node{
-        flex: 1;
-        line-height: 32px;
-      }
-      .el-button{
-        float: right;
-        margin: 0 5px;
-        display: none;
-      }
+    }
+    .custom-tree-node{
+      flex: 1;
+      line-height: 32px;
+    }
+    .el-button{
+      float: right;
+      margin: 0 5px;
+      display: none;
     }
   }
   .right .el-form{

@@ -3,21 +3,22 @@
     <side-bar/>
     <div class="sub-app-wrapper">
       <tags-view/>
-      <div class="sub-app-main">
-        <router-view v-slot="{ Component }">
-          <transition name="fade-transform" mode="out-in">
-            <keep-alive>
-              <component :is="Component"/>
-            </keep-alive>
-          </transition>
-        </router-view>
-      </div>
+      <el-scrollbar class="scroll-view">
+        <div class="sub-app-main">
+          <router-view v-slot="{ Component }">
+            <transition name="fade-transform" mode="out-in">
+              <keep-alive>
+                <component :is="Component"/>
+              </keep-alive>
+            </transition>
+          </router-view>
+        </div>
+      </el-scrollbar>
     </div>
   </div>
 </template>
 
 <script>
-import { onMounted } from 'vue';
 import SideBar from './components/SideBar.vue'
 import TagsView from './components/TagsView.vue'
 export default {
@@ -27,8 +28,6 @@ export default {
     TagsView
   },
   setup () {
-    onMounted(() => {
-    })
   }
 }
 </script>
@@ -68,9 +67,11 @@ html, body{
     display: flex;
     flex-direction: column;
     margin-left: 10px;
+    &>.el-scrollbar{
+      background: #fff;
+    }
   }
   .sub-app-main{
-    background: #fff;
     flex: 1;
     padding: 15px;
   }

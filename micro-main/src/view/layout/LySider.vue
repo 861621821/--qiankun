@@ -9,13 +9,14 @@
 </template>
 
 <script>
-import actions from '../store'
+import actions from '../../store'
 import logo from './LyLogo'
-import utils from '../utils'
+import utils from '../../utils'
 export default {
   components: {
     logo
   },
+  props: ['routes'],
   data () {
     return {
       apps: [],

@@ -17,16 +17,5 @@
     "start:sub-vue": "cd sub-vue && npm start",
     "start:main": "cd main && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@fengxianqi.github.com:fengxianqi/qiankun-example.git"
-  },
-  "keywords": [
-    "qiankun",
-    "微前端",
-    "demo"
-  ],
-  "author": "fengxianqi",
-  "license": "MIT"
+  }
 }
