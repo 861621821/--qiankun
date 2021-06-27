@@ -1,6 +1,0 @@
-{
-  "name": "common",
-  "version": "1.0.0",
-  "description": "微前端公共模块",
-  "main": "src/index.js"
-}

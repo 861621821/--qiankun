@@ -19,7 +19,7 @@
       <el-table-column prop="createDate" label="创建日期"></el-table-column>
       <el-table-column prop="editDate" label="修改日期"></el-table-column>
       <el-table-column label="修改">
-        <template #default="scope">
+        <template #default>
           <el-button type="text">编辑</el-button>
         </template>
       </el-table-column>

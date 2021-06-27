@@ -16,7 +16,7 @@ function registerGlobalModule (store, props = {}) {
       namespaced: true,
       state: {
         ...initState,
-        routesTags: {}, // 存放打开过的页面
+        routesTags: [] // 存放打开过的页面
       },
       mutations: {
         SET_GLOBALSTATE (state, payload) {
@@ -24,11 +24,17 @@ function registerGlobalModule (store, props = {}) {
           // 通知父应用
           props.setGlobalState(state)
         },
-        ADD_ROUTESTAGS(state, {path, title}){
-          state.routesTags[path] = title
+        ADD_ROUTESTAGS(state, payload){
+          const temp = state.routesTags.filter(e => e.path === payload.path)
+          !temp.length && state.routesTags.push(payload)
         },
         REMOVE_ROUTESTAGS(state, path){
-          delete state.routesTags[path]
+          state.routesTags.some((e, i)=>{
+            if(e.path === path){
+              state.routesTags.splice(i, 1)
+              return true
+            }
+          })
         }
       },
       actions: {

@@ -3,7 +3,7 @@
     <logo/>
     <el-menu-item :index="item.path" v-for="item in apps" :key="item.path">
       <i :class="item.icon || 'el-icon-menu'"></i>
-      <span slot="title">{{item.name}}</span>
+      <span slot="title">{{item.title}}</span>
     </el-menu-item>
   </el-menu>
 </template>

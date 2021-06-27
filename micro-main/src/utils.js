@@ -17,7 +17,7 @@ export default {
               {
                 path: '/app-setting',
                 title: '应用配置',
-                icon: 'el-icon-s-grid',
+                icon: 'el-icon-setting',
                 id: '001001',
                 pid: '001',
                 component: 'AppSetting.vue',
@@ -27,7 +27,7 @@ export default {
               {
                 path: '/role',
                 title: '角色管理',
-                icon: 'el-icon-s-custom',
+                icon: 'el-icon-s-operation',
                 id: '001002',
                 pid: '001',
                 component: 'Role.vue',
@@ -37,10 +37,10 @@ export default {
               {
                 path: '/staff',
                 title: '员工管理',
-                icon: 'el-icon-user-solid',
+                icon: 'el-icon-user',
                 id: '001003',
                 pid: '001',
-                component: 'Role.vue',
+                component: 'Staff.vue',
                 isMenu: true,
                 sort: 3
               }
