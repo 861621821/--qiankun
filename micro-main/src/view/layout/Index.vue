@@ -1,11 +1,11 @@
 <template>
   <div class="layout-wrapper">
-    <lySide></lySide>
+    <lySide :active="currentRouterBase"></lySide>
     <div class="main-wrapper">
       <ly-header/>
       <div
         id="subapp-viewport"
-        v-loading="globalState.subAppLoading"
+        v-loading="subAppLoading"
         element-loading-text="进入子系统..."
         element-loading-spinner="lyloading"
         element-loading-background="hsla(0,0%,100%,.8)">
@@ -32,6 +32,9 @@ export default {
   computed: {
     globalState () {
       return actions.getGlobalState()
+    },
+    subAppLoading () {
+      return actions.getGlobalState('subAppLoading')
     },
     currentRouterBase () {
       return actions.getGlobalState('currentAppProps').routerBase

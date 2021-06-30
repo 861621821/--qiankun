@@ -46,8 +46,7 @@
     <el-dialog
       :title="newType === 0 ? '新增应用' : '新增菜单'"
       v-model="dialogVisible"
-      width="30%"
-      :before-close="handleClose">
+      width="30%">
       <el-form ref="_form" :model="form" label-width="100px">
         <el-form-item label="应用名">
           <el-input v-model="form.name" placeholder="例如：应用配置"></el-input>

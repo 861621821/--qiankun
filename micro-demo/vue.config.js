@@ -1,7 +1,7 @@
 const { name } = require('../package.json')
 
 module.exports = {
-  publicPath: '/subapp/demo',
+  publicPath: '/subapp/micro-demo/',
   transpileDependencies: ['common'],
   chainWebpack: config => config.resolve.symlinks(false),
   configureWebpack: {
@@ -17,5 +17,12 @@ module.exports = {
     headers: {
       'Access-Control-Allow-Origin': '*'
     }
+  },
+  css: {
+    // loaderOptions: {
+    //   scss: {
+    //     additionalData: '@import \'@/style/index.scss\';'
+    //   }
+    // }
   }
 }

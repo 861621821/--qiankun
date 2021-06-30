@@ -5,6 +5,10 @@ import routes from './router'
 import { commonStore } from 'common'
 import store from './store'
 import VueRouter from 'vue-router'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+Vue.use(ElementUI, { size: 'medium' })
 
 Vue.config.productionTip = false
 let instance = null
@@ -12,7 +16,7 @@ let instance = null
 function render (props = {}) {
   const { container, routerBase } = props
   const router = new VueRouter({
-    base: window.__POWERED_BY_QIANKUN__ ? routerBase : process.env.BASE_URL,
+    base: window.__POWERED_BY_QIANKUN__ ? routerBase : '/subapp/micro-demo/',
     mode: 'history',
     routes
   })

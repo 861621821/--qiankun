@@ -4,12 +4,12 @@ const microApps = [
   {
     name: '配置应用',
     entry: process.env.VUE_APP_SUB_AUTH,
-    activeRule: '/micro-auth'
+    activeRule: '/auth'
   },
   {
-    name: 'micro-demo',
+    name: 'demo应用',
     entry: process.env.VUE_APP_SUB_DEMO,
-    activeRule: '/micro-demo'
+    activeRule: '/demo'
   }
 ]
 

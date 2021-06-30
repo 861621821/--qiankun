@@ -1,5 +1,5 @@
 <template>
-  <el-menu class="side-wrapper" :default-active="defaultActive" router>
+  <el-menu class="side-wrapper" :default-active="active" router>
     <logo/>
     <el-menu-item :index="item.path" v-for="item in apps" :key="item.path">
       <i :class="item.icon || 'el-icon-menu'"></i>
@@ -12,15 +12,15 @@
 import actions from '../../store'
 import logo from './LyLogo'
 import utils from '../../utils'
+import { setDefaultMountApp } from 'qiankun'
 export default {
   components: {
     logo
   },
-  props: ['routes'],
+  props: ['routes', 'active'],
   data () {
     return {
-      apps: [],
-      defaultActive: ''
+      apps: []
     }
   },
   mounted () {
@@ -29,6 +29,8 @@ export default {
   methods: {
     initMenu () {
       utils.fetchMenu().then(res => {
+        // 默认访问第一个子应用
+        setDefaultMountApp(res?.data[0].path)
         res.data.map(e => {
           this.apps = res.data
         })

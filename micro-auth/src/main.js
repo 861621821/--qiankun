@@ -16,7 +16,7 @@ let instance = null, router = null, subAppPageLoading = null
 
 function render({ routerBase, container } = {}) {
   router = createRouter({
-    history: createWebHistory(__qiankun__ ? routerBase : '/'),
+    history: createWebHistory(__qiankun__ ? routerBase : '/subapp/micro-auth/'),
     routes
   })
 
@@ -54,7 +54,7 @@ export async function mount(props) {
   commonStore.globalRegister(store, props)
 
   render(props);
-  const { asyncSubAppRoutes } = props.getGlobalState()
+  const asyncSubAppRoutes = props.getGlobalState('asyncSubAppRoutes')
   initRouter(router, asyncSubAppRoutes)
 }
 

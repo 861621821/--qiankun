@@ -10,22 +10,15 @@
 </template>
 
 <script>
-import { reactive,toRefs } from 'vue'
 export default {
-  setup() {
-    const state = reactive({
-      tags: [
-        { path: '/', name: '首页' },
-        { path: '/index', name: '首1页' },
-        { path: '/aaa', name: '首页22222' }
-      ]
-    })
-    const handleColseTag = (item,i) => {
-      state.tags.splice(i, 1)
-    }
+  data () {
     return {
-      ...toRefs(state),
-      handleColseTag
+      tags: []  
+    }
+  },
+  methods: {
+    handleColseTag(item,i){
+      this.tags.splice(i, 1)
     }
   }
 }

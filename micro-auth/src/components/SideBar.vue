@@ -1,8 +1,8 @@
 <template>
   <div class="subapp-menu-wrapper">
     <div class="subapp-name">{{ subAppName }}</div>
-    <el-menu router>
-      <el-menu-item :index="item.path" v-for="item in initMenu()" :key="item.id">
+    <el-menu router :default-active="routes[0].path">
+      <el-menu-item :index="item.path" v-for="item in routes" :key="item.id">
         <template #title>
           <i :class="item.icon || 'el-icon-warning'"></i>
           <span>{{ item.title }}</span>
@@ -18,17 +18,17 @@ import { useStore } from 'vuex'
 export default {
   setup() {
     const store = useStore()
-    const { value:currentAppProps } = computed(() => store.state.global.currentAppProps)
+    const { value: currentAppProps } = computed(() => store.state.global.currentAppProps)
     const subAppName = currentAppProps.name
     const { asyncSubAppRoutes } = currentAppProps.getGlobalState()
-    const initMenu = () => {
+    const routes = (() => {
       const sortedRoutes = asyncSubAppRoutes.sort((a, b) => a.sort - b.sort)
       return sortedRoutes.filter(e => e.isMenu)
-    }
+    })()
 
     return {
       subAppName,
-      initMenu
+      routes
     }
   }
 }

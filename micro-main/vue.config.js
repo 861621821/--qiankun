@@ -1,4 +1,5 @@
 module.exports = {
+  // publicPath: './',
   lintOnSave: 'warning',
   devServer: {
     port: 80,

@@ -1,54 +1,32 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <a href="#" @click="gotoTest" style="marin: 0 0 0 10px">跳转到micro-test</a>
+  <div class="subapp-wrapper">
+    <side-bar/>
+    <div class="main-wrapper">
+      <tags-view/>
+      <router-view/>
     </div>
-    <div>
-      micro-demo
-    </div>
-    <router-view/>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { commonComponents } from 'common'
 export default {
+  components: {
+    SideBar: commonComponents.SideBar,
+    TagsView: commonComponents.TagsView
+  },
   computed: {
-    // 通过global获取user的信息
-    ...mapState('global', {
-      user: state => state.user
-    })
   },
   methods: {
-    gotoTest () {
-      history.pushState(null, 'micro-test', '/micro-test')
-    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<style lang="scss" scoped>
+.subapp-wrapper{
+  display: flex;
+  .main-wrapper{
+    flex: 1;
+  }
 }
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-
 </style>

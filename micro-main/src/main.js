@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import { registerMicroApps, start, setDefaultMountApp } from 'qiankun'
+import { registerMicroApps, start } from 'qiankun'
 import router from './router'
 import microApps from './micro-app'
 import actions from './store'
@@ -57,13 +57,13 @@ const apps = microApps.map(item => {
 
 registerMicroApps(apps, {
   beforeLoad: app => {
-
+    actions.setGlobalState({
+      subAppLoading: true
+    })
   },
   beforeMount: [
     app => {
-      console.log(app.props)
       actions.setGlobalState({
-        subAppLoading: true,
         // 保存当前子系统
         currentAppProps: app.props
       })
@@ -82,5 +82,5 @@ registerMicroApps(apps, {
     }
   ]
 })
-setDefaultMountApp('/micro-auth')
+
 start()

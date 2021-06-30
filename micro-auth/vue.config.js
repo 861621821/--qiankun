@@ -1,7 +1,7 @@
-const { name } = require('../package.json');
+const { name } = require('../package.json')
 
 module.exports = {
-  publicPath: '/subapp/auth',
+  publicPath: '/subapp/micro-auth/',
   transpileDependencies: ['common'],
   chainWebpack: config => config.resolve.symlinks(false),
   configureWebpack: {
@@ -29,4 +29,4 @@ module.exports = {
       }
     }
   }
-};
+}

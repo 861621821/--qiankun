@@ -3,7 +3,6 @@
  * @param {qiankun下发的props} props 
  */
 function registerGlobalModule (store, props = {}) {
-  console.log(store,props);
   if (!store || !store.hasModule) {
     return;
   }

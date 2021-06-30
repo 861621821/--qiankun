@@ -4,12 +4,39 @@ export default {
   // 获取菜单
   fetchMenu () {
     // return axios.get('/test')
+    // const dev = process.env.NODE_ENV === 'dev'
     return new Promise((resolve, reject) => {
       resolve({
         code: 200,
         data: [
           {
-            path: '/micro-auth',
+            path: '/demo',
+            title: '客户',
+            appId: '002',
+            icon: 'el-icon-user-solid',
+            menu: [
+              {
+                path: '/customer',
+                title: '客户管理',
+                id: '002001',
+                pid: '002',
+                component: 'customer/Index.vue',
+                isMenu: true,
+                sort: 1
+              },
+              {
+                path: '/task',
+                title: '任务宝',
+                id: '002002',
+                pid: '002',
+                component: 'task/Index.vue',
+                isMenu: true,
+                sort: 2
+              }
+            ]
+          },
+          {
+            path: '/auth',
             title: '应用',
             icon: 'el-icon-set-up',
             id: '001',
@@ -43,32 +70,6 @@ export default {
                 component: 'Staff.vue',
                 isMenu: true,
                 sort: 3
-              }
-            ]
-          },
-          {
-            path: '/micro-demo',
-            title: '客户',
-            appId: '002',
-            icon: 'el-icon-user-solid',
-            menu: [
-              {
-                path: '/customer',
-                title: '客户管理',
-                id: '002001',
-                pid: '002',
-                component: 'Customer.vue',
-                isMenu: true,
-                sort: 1
-              },
-              {
-                path: '/role',
-                title: '任务宝',
-                id: '002002',
-                pid: '002',
-                component: 'Role.vue',
-                isMenu: true,
-                sort: 2
               }
             ]
           }

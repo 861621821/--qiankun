@@ -7,7 +7,8 @@ const initialState = Vue.observable({
   subAppLoading: false, // 子系统加载状态
   currentAppProps: {}, // 当前子系统
   asyncApps: [], // 通过接口请求回来的所有系统数据
-  asyncSubAppRoutes: [] // 当前子系统菜单
+  asyncSubAppRoutes: [], // 当前子系统菜单
+  routesTags: []
 })
 const actions = initGlobalState(initialState)
 

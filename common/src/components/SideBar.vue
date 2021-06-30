@@ -1,10 +1,10 @@
 <template>
   <div class="subapp-menu-wrapper">
-    <div class="subapp-name">{{appName}}</div>
+    <div class="subapp-name">{{ currentAppProps.name }}</div>
     <el-menu class="side-menu" :default-active="defaultActive" router>
       <el-menu-item :index="appRootPath + item.path" v-for="item in appRoutes" :key="item.id">
         <i :class="item.icon || 'el-icon-menu'"></i>
-        <span slot="title">{{item.name}}</span>
+        <span slot="title">{{item.title}}</span>
       </el-menu-item>
     </el-menu>
   </div>
@@ -14,39 +14,64 @@
 export default {
   data () {
     return {
-      appName: '', // 子应用名
+      subAppName: '', // 子应用名
       appRootPath: '', // 子应用跟路径
       defaultActive: this.$route.path
     }
   },
   computed: {
+    currentAppProps(){
+      return this.$store.state.global.currentAppProps
+    },
     path () {
       return this.$route.path
     },
     appRoutes () {
-      return this.$store.state.subAppRoutes
+      return this.$store.state.global.asyncSubAppRoutes
     }
   },
+  mounted () {
+    console.log(this.currentAppProps)
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .subapp-menu-wrapper{
   width: 226px;
-  box-shadow: 2px 0px 6px 0px rgba(51,51,51,0.15);
+  background: #fff;
+  .subapp-name{
+    font-size: 14px;
+    height: 48px;
+    line-height: 48px;
+    padding: 0 20px;
+    background: #F9FAFC;
+    font-weight: bold;
+    position: relative;
+    &::before{
+      display: inline-block;
+      content: '';
+      background: #fdcd33;
+      width: 3px;
+      height: 16px;
+      border-radius: 2px;
+      position: absolute;
+      left: 0;
+      top: 16px;
+    }
+  }
   .el-menu{
     border-right: unset;
+    color: #4C4D57;
+    :deep(.el-menu-item){
+      &.is-active{
+        color: #4C4D57;
+        background: #f0f0f0;
+      }
+      &:focus, &:hover{
+        background: #f0f0f0;
+      }
+    }
   }
-}
-.el-menu-item.is-active{
-  background: #f0f0f0;
-  color: #303133;
-}
-.subapp-name{
-  font-size: 14px;
-  height: 48px;
-  line-height: 48px;
-  color: #595959;
-  padding-left: 20px;
 }
 </style>
