@@ -12,7 +12,7 @@ module.exports = {
   chainWebpack: config => {
     config.plugin('html')
       .tap((args) => {
-        args[0].title = 'qiankun-example'
+        args[0].title = 'qiankun'
         return args
       })
     config.resolve.symlinks(false)
