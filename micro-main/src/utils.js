@@ -20,6 +20,7 @@ export default {
                 title: '客户管理',
                 id: '002001',
                 pid: '002',
+                icon: 'https://image.01lb.com.cn//uploads/wecom/21/0617/1623919611K717Ftr2.png',
                 component: 'customer/Index.vue',
                 isMenu: true,
                 sort: 1

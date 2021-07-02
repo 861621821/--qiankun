@@ -16,13 +16,17 @@ module.exports = {
     port: process.env.VUE_APP_PORT,
     headers: {
       'Access-Control-Allow-Origin': '*'
+    },
+    overlay: {
+      warnings: false,
+      errors: false
     }
   },
   css: {
-    // loaderOptions: {
-    //   scss: {
-    //     additionalData: '@import \'@/style/index.scss\';'
-    //   }
-    // }
+    loaderOptions: {
+      scss: {
+        additionalData: '@import \'@/style/index.scss\';'
+      }
+    }
   }
 }

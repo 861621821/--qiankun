@@ -6,8 +6,7 @@ import routes from './router/index'
 import { commonStore } from 'common'
 import { initRouter } from './utils'
 import App from './App.vue'
-import ElementPlus from 'element-plus'
-import { ElLoading } from 'element-plus'
+import ElementPlus, { ElLoading } from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
 
 const __qiankun__ = window.__POWERED_BY_QIANKUN__

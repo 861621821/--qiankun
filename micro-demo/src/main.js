@@ -3,22 +3,42 @@ import Vue from 'vue'
 import App from './App.vue'
 import routes from './router'
 import { commonStore } from 'common'
+import { initRouter } from './utils'
 import store from './store'
 import VueRouter from 'vue-router'
-import ElementUI from 'element-ui'
+import ElementUI, { Loading } from 'element-ui'
+
 import 'element-ui/lib/theme-chalk/index.css'
 
+Vue.use(VueRouter)
 Vue.use(ElementUI, { size: 'medium' })
 
 Vue.config.productionTip = false
 let instance = null
+let router = null
+let subAppPageLoading = null
 
 function render (props = {}) {
   const { container, routerBase } = props
-  const router = new VueRouter({
+  router = new VueRouter({
     base: window.__POWERED_BY_QIANKUN__ ? routerBase : '/subapp/micro-demo/',
     mode: 'history',
     routes
+  })
+
+  router.beforeEach((to, from, next) => {
+    console.log(1)
+    store.dispatch('global/addRoutesTags', { path: to.path, title: to.meta.title })
+    // 添加页面loading
+    subAppPageLoading = Loading.service({
+      target: '.scroll-view'
+    })
+    next()
+  })
+
+  router.afterEach(() => {
+    console.log(2)
+    subAppPageLoading.close()
   })
 
   instance = new Vue({
@@ -49,6 +69,8 @@ export async function mount (props) {
   commonStore.globalRegister(store, props)
 
   render(props)
+  const asyncSubAppRoutes = props.getGlobalState('asyncSubAppRoutes')
+  initRouter(instance, asyncSubAppRoutes)
 }
 
 export async function unmount () {

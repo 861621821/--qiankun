@@ -3,7 +3,7 @@
     <div class="subapp-name">{{ currentAppProps.name }}</div>
     <el-menu class="side-menu" :default-active="defaultActive" router>
       <el-menu-item :index="appRootPath + item.path" v-for="item in appRoutes" :key="item.id">
-        <i :class="item.icon || 'el-icon-menu'"></i>
+        <el-avatar :size="40" :src="item.icon"></el-avatar>
         <span slot="title">{{item.title}}</span>
       </el-menu-item>
     </el-menu>
@@ -29,9 +29,6 @@ export default {
     appRoutes () {
       return this.$store.state.global.asyncSubAppRoutes
     }
-  },
-  mounted () {
-    console.log(this.currentAppProps)
   }
 }
 </script>
@@ -63,14 +60,26 @@ export default {
   .el-menu{
     border-right: unset;
     color: #4C4D57;
-    :deep(.el-menu-item){
-      &.is-active{
-        color: #4C4D57;
-        background: #f0f0f0;
+    ::v-deep{
+      .el-menu-item{
+        &.is-active{
+          color: #4C4D57;
+          background: #f0f0f0;
+        }
+        &:focus{
+          background: #f0f0f0;
+        }
+        &:hover{
+          background: #fff;
+        }
       }
-      &:focus, &:hover{
-        background: #f0f0f0;
-      }
+    }
+    .el-menu-item, .el-submenu__title{
+      height: 72px;
+      line-height: 72px;
+    }
+    .el-avatar{
+      margin-right: 10px;
     }
   }
 }
