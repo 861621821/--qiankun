@@ -64,7 +64,7 @@ export default {
       .el-menu-item{
         &.is-active{
           color: #4C4D57;
-          background: #f0f0f0;
+          background: #f0f0f0!important;
         }
         &:focus{
           background: #f0f0f0;

@@ -27,18 +27,20 @@ function render (props = {}) {
   })
 
   router.beforeEach((to, from, next) => {
-    console.log(1)
+    console.log(to)
     store.dispatch('global/addRoutesTags', { path: to.path, title: to.meta.title })
     // 添加页面loading
-    subAppPageLoading = Loading.service({
-      target: '.scroll-view'
-    })
+    if (!subAppPageLoading) {
+      subAppPageLoading = Loading.service({
+        target: '.scroll-view'
+      })
+    }
     next()
   })
 
   router.afterEach(() => {
-    console.log(2)
     subAppPageLoading.close()
+    subAppPageLoading = null
   })
 
   instance = new Vue({

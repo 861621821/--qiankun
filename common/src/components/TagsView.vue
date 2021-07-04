@@ -1,9 +1,9 @@
 <template>
   <div class="tags-view">
     <transition-group name="tag">
-      <span class="tag" v-for="(item, i) in tags" :key="item">
-        {{item.name}}
-        <i class="el-icon-close" v-if="item.path !== '/'" @click="handleColseTag(item, i)"></i>
+      <span class="tag" :class="{active: item.path === currentPath}" v-for="(item, i) in tags" :key="item" @click="handleGoPage(item)">
+        {{ item.title }}
+        <i class="el-icon-close" v-if="tags.length > 1" @click.stop="handleColseTag(item, i)"></i>
       </span>
     </transition-group>
   </div>
@@ -16,9 +16,29 @@ export default {
       tags: []  
     }
   },
+  computed: {
+    currentPath(){
+      return this.$router.path
+    }
+  },
+  mounted() {
+    console.log(this.$router)
+  },
   methods: {
-    handleColseTag(item,i){
-      this.tags.splice(i, 1)
+    handleGoPage({ path }) {
+      this.$router.push(path)
+    },
+    handleColseTag({ path }, i) {
+      if(path === this.currentPath){
+        let nextRoute = null
+        if(i < tags.length - 1){
+          nextRoute = tags[i + 1]
+        } else {
+          nextRoute = tags[i - 1]
+        }
+        this.$router.push(nextRoute.path)
+      }
+      dispatch('global/removeRoutesTags', path)
     }
   }
 }
