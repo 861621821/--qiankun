@@ -27,19 +27,20 @@ function render (props = {}) {
   })
 
   router.beforeEach((to, from, next) => {
-    console.log(to)
-    store.dispatch('global/addRoutesTags', { path: to.path, title: to.meta.title })
-    // 添加页面loading
-    if (!subAppPageLoading) {
-      subAppPageLoading = Loading.service({
-        target: '.scroll-view'
-      })
+    if (to.name) {
+      store.dispatch('global/addRoutesTags', { path: to.path, title: to.meta.title })
+      // 添加页面loading
+      if (!subAppPageLoading) {
+        subAppPageLoading = Loading.service({
+          target: '.scroll-view'
+        })
+      }
     }
     next()
   })
 
   router.afterEach(() => {
-    subAppPageLoading.close()
+    subAppPageLoading && subAppPageLoading.close()
     subAppPageLoading = null
   })
 

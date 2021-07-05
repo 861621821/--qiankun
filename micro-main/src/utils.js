@@ -16,6 +16,7 @@ export default {
             icon: 'el-icon-user-solid',
             menu: [
               {
+                name: 'customer',
                 path: '/customer',
                 title: '客户管理',
                 id: '002001',
@@ -26,6 +27,7 @@ export default {
                 sort: 1
               },
               {
+                name: 'task',
                 path: '/task',
                 title: '任务宝',
                 id: '002002',

@@ -5,13 +5,11 @@
       <tags-view/>
       <el-scrollbar class="scroll-view">
         <div class="sub-app-main">
-          <router-view v-slot="{ Component }">
-            <transition name="fade-transform" mode="out-in">
-              <keep-alive>
-                <component :is="Component"/>
-              </keep-alive>
-            </transition>
-          </router-view>
+          <transition name="fade-transform" mode="out-in">
+            <keep-alive>
+              <router-view/>
+            </keep-alive>
+          </transition>
         </div>
       </el-scrollbar>
     </div>
@@ -38,19 +36,16 @@ export default {
 }
 
 /* fade-transform */
-.fade-transform-leave-active,
-.fade-transform-enter-active {
-  transition: all 0.28s;
+.fade-transform-enter-active, .fade-transform-leave-active {
+  transition: all .28s;
 }
-
-.fade-transform-enter-from {
-  opacity: 0;
+.fade-transform-enter {
   transform: translateX(-10px);
-}
-
-.fade-transform-leave-to {
   opacity: 0;
+}
+.fade-transform-leave-to {
   transform: translateX(10px);
+  opacity: 0;
 }
 
 .subapp-wrapper{

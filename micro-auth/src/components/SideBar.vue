@@ -1,7 +1,7 @@
 <template>
   <div class="subapp-menu-wrapper">
     <div class="subapp-name">{{ subAppName }}</div>
-    <el-menu router :default-active="routes[0].path">
+    <el-menu router :default-active="active">
       <el-menu-item :index="item.path" v-for="item in routes" :key="item.id">
         <template #title>
           <i :class="item.icon || 'el-icon-warning'"></i>
@@ -13,11 +13,16 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { reactive, toRefs, computed, watch } from 'vue'
 import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 export default {
   setup() {
+    const state = reactive({
+      active: ''
+    })
     const store = useStore()
+    const route = useRoute()
     const { value: currentAppProps } = computed(() => store.state.global.currentAppProps)
     const subAppName = currentAppProps.name
     const { asyncSubAppRoutes } = currentAppProps.getGlobalState()
@@ -26,7 +31,12 @@ export default {
       return sortedRoutes.filter(e => e.isMenu)
     })()
 
+    watch(() => route.path, (n) => {
+      state.active = n
+    })
+
     return {
+      ...toRefs(state),
       subAppName,
       routes
     }

@@ -8,6 +8,7 @@ export const initRouter = (instance, asyncRoutes) => {
       defaultPath = e.path
     }
     const route = {
+      name: e.name,
       path: e.path,
       component: () => import(`../views/${e.component}`),
       meta: { title: e.title }

@@ -29,6 +29,11 @@ export default {
     appRoutes () {
       return this.$store.state.global.asyncSubAppRoutes
     }
+  },
+  watch: {
+    '$route.path'(path){
+      this.defaultActive = path
+    }
   }
 }
 </script>

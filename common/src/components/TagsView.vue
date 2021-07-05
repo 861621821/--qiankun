@@ -1,7 +1,7 @@
 <template>
   <div class="tags-view">
     <transition-group name="tag">
-      <span class="tag" :class="{active: item.path === currentPath}" v-for="(item, i) in tags" :key="item" @click="handleGoPage(item)">
+      <span class="tag" :class="{active: item.path === currentPath}" v-for="(item, i) in tags" :key="item.path" @click="handleGoPage(item)">
         {{ item.title }}
         <i class="el-icon-close" v-if="tags.length > 1" @click.stop="handleColseTag(item, i)"></i>
       </span>
@@ -13,32 +13,33 @@
 export default {
   data () {
     return {
-      tags: []  
     }
   },
   computed: {
+    tags(){
+      return this.$store.state.global.routesTags
+    },
     currentPath(){
-      return this.$router.path
+      return this.$route.path
     }
-  },
-  mounted() {
-    console.log(this.$router)
   },
   methods: {
     handleGoPage({ path }) {
-      this.$router.push(path)
+      if(path !== this.currentPath){
+        this.$router.push(path)
+      }
     },
     handleColseTag({ path }, i) {
       if(path === this.currentPath){
         let nextRoute = null
-        if(i < tags.length - 1){
-          nextRoute = tags[i + 1]
+        if(i < this.tags.length - 1){
+          nextRoute = this.tags[i + 1]
         } else {
-          nextRoute = tags[i - 1]
+          nextRoute = this.tags[i - 1]
         }
         this.$router.push(nextRoute.path)
       }
-      dispatch('global/removeRoutesTags', path)
+      this.$store.dispatch('global/removeRoutesTags', path)
     }
   }
 }
@@ -46,9 +47,10 @@ export default {
 
 <style lang="scss" scoped>
 .tags-view{
-  border-bottom: 1px solid #efefef;
   .tag{
     background: #fff;
+    color: #909399;
+    cursor: pointer;
     display: inline-block;
     height: 32px;
     line-height: 32px;
@@ -56,6 +58,7 @@ export default {
     padding: 0 20px;
     position: relative;
     border-right: 1px solid #efefef;
+    border-bottom: 1px solid #efefef;
     &:first-of-type{
       border-radius: 4px 0 0 0;
     }
@@ -63,8 +66,15 @@ export default {
       border-radius: 0 4px 0 0;
       border-right: unset
     }
+    &:only-of-type{
+      border-radius: 4px 4px 0 0;
+    }
     &:hover .el-icon-close{
       display: inline-block;
+    }
+    &.active{
+      color: $main-color;
+      border-bottom-color: transparent;
     }
     .el-icon-close{
       display: none;
@@ -83,6 +93,5 @@ export default {
 .tag-enter-from,
 .tag-leave-to {
   opacity: 0;
-  transform: scale(10%)
 }
 </style>
